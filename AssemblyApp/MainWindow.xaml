@@ -1,0 +1,28 @@
+﻿<Window x:Class="AssemblyApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AssemblyApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <StackPanel DataContext="{Binding Result}" Margin="4,0,0,69" Orientation="Horizontal" Grid.ColumnSpan="3">
+
+            <TreeView x:Name="MainTreeView" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch"
+                      ItemsSource="{Binding Namespaces}" Width="592">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding TypeNodes}">
+                        <StackPanel>
+                            <Label Content="{Binding Path=Name}" />
+                            <Label Content="{Binding Path=Typeinfo}"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+                </TreeView>
+        </StackPanel>
+      
+        <Button Content="Open_Assembly" HorizontalAlignment="Left" Margin="640,323,0,0" VerticalAlignment="Top" Width="84" Height="28" Command="{Binding OpenCommand}"/>
+
+    </Grid>
+</Window>

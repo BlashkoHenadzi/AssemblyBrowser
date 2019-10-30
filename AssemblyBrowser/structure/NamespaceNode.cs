@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AssemblyBrowser.structure
 {
-    class NamespaceNode : INode
+    public class NamespaceNode : INode
     {
         public string Name { get; set; }
         public List<TypeNode> TypeNodes { get; set; }
