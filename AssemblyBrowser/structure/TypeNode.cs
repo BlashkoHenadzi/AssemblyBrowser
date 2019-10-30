@@ -29,20 +29,29 @@ namespace AssemblyBrowser.structure
 
         private void GetTypeSignature()
         {
-            Typeinfo = "\tFields:\n\t\t";
+            
 
             foreach (FieldNode field in fields)
+            {
+                Typeinfo = "\tFields:\n\t\t";
                 Typeinfo += field.TypeName + " " + field.Name + "\n\t\t";
+            }
 
-            Typeinfo += "\n\tProperties\n\t\t";
+
 
             foreach (PropertuNode property in propertus)
+            {
+                Typeinfo += "\n\tProperties\n\t\t";
                 Typeinfo += property.TypeName + " " + property.Name + "\n\t\t";
+            }
 
-            Typeinfo += "\n\tMethods\n\t\t";
+
 
             foreach (MethodNode method in methods)
+            {
+                Typeinfo += "\n\tMethods\n\t\t";
                 Typeinfo += method.Signature + "\n\t\t";
+            }
 
             this.Typeinfo = Typeinfo;
         }

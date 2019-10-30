@@ -8,7 +8,6 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <StackPanel DataContext="{Binding Result}" Margin="4,0,0,69" Orientation="Horizontal" Grid.ColumnSpan="3">
-
             <TreeView x:Name="MainTreeView" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch"
                       ItemsSource="{Binding Namespaces}" Width="592">
                 <TreeView.ItemTemplate>
@@ -19,9 +18,8 @@
                         </StackPanel>
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
-                </TreeView>
+            </TreeView>
         </StackPanel>
-      
         <Button Content="Open_Assembly" HorizontalAlignment="Left" Margin="640,323,0,0" VerticalAlignment="Top" Width="84" Height="28" Command="{Binding OpenCommand}"/>
 
     </Grid>
