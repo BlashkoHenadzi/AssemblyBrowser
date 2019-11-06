@@ -6,62 +6,61 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
-using System.Windows.Forms;
+using System.Collections.ObjectModel;
+using AssemblyBrowser.VM;
+using System.Windows.Input;
+
 namespace AssemblyBrowser
 {
     public class ViewModel : INotifyPropertyChanged
-    {
-        private BrowseResult _browseResult;
-        private AssemblyLoader _loader;
-        public event PropertyChangedEventHandler PropertyChanged;
-    
-        private RelayCommand _openCommand;
+    {        
+           
+            public event PropertyChangedEventHandler PropertyChanged;
 
-        public ViewModel()
-        {
-            _loader = new AssemblyLoader();
-        }
-
-        public BrowseResult Result
-        {
-            get { return _browseResult; }
-            set
+            public ICommand Browse
             {
-                _browseResult = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public RelayCommand OpenCommand
-        {
-            get
-            {
-                return _openCommand ??
-                    (_openCommand = new RelayCommand(obj =>
+                get
+                {
+                    return new RelayCommand((obj) =>
                     {
-                        try
+                        System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
+                        if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                         {
-                            OpenFileDialog openFileDialog = new OpenFileDialog();
-                            if (openFileDialog.ShowDialog() == DialogResult.OK)
-                            {
-                                Result = _loader.Load(openFileDialog.FileName);
+                            string FilePath = dlg.FileName;
+                            AssemblyLoader assemblyLoader = new AssemblyLoader();
+                            BrowseResult browseResult = assemblyLoader.Load(FilePath);
+                            if (browseResult != null)
+                            {                                
+                                VMConverter converter = new VMConverter(browseResult);
+                                Nodes = converter.treeNodes;
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.ToString());
-                        }
-                    }));
+                    }, (obj) => true);
+                }
             }
+
+            private ObservableCollection<TreeNode> _nodes;
+
+            public ObservableCollection<TreeNode> Nodes
+            {
+                get
+                {
+                    return _nodes;
+                }
+                set
+                {
+                    _nodes = value;
+                    OnAssemblyBrowsed();
+                }
+            }
+
+            public void OnAssemblyBrowsed([CallerMemberName]string path = "")
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(path));
+            }
+
+         
+
         }
     }
-}
 

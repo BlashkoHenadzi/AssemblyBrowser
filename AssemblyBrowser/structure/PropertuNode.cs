@@ -15,7 +15,7 @@ namespace AssemblyBrowser.structure
         public PropertuNode(PropertyInfo propertyInfo)
         {
             Name = propertyInfo.Name;
-            TypeName = propertyInfo.PropertyType.ToString();
+            TypeName = propertyInfo.PropertyType.ToString()+ " "+ Name;            
         }
 
         

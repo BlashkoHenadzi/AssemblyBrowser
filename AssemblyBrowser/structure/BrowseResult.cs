@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -9,11 +10,11 @@ namespace AssemblyBrowser.structure
 {
     public class BrowseResult
     {
-        public List<NamespaceNode> Namespaces { get; set; }
+        public ObservableCollection<NamespaceNode> Namespaces { get; set; }
 
         public BrowseResult(Assembly assembly)
         {
-            Namespaces = new List<NamespaceNode>() ;
+            Namespaces = new ObservableCollection<NamespaceNode>() ;
             GetNamespaces(assembly);
             GetTypes(assembly);
         }

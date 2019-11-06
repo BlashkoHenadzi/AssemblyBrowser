@@ -14,7 +14,7 @@ namespace AssemblyBrowser.structure
         public FieldNode(FieldInfo fieldInfo)
         {
             Name = fieldInfo.Name;
-            TypeName = fieldInfo.FieldType.ToString();
+            TypeName = fieldInfo.FieldType.ToString()+ " "+ Name;
         }
 
        

@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace AssemblyBrowser.structure
 {
     public class TypeNode : INode
     {
         public string Name { get; set; }
         public string Typeinfo { get; set; }
-        public List<PropertuNode> propertus;
-        public List<FieldNode> fields;
-        public List<MethodNode> methods;
+        public ObservableCollection<PropertuNode> propertus { get; set; }
+        public ObservableCollection<FieldNode> fields { get; set; }
+        public ObservableCollection<MethodNode> methods { get; set; }
 
         public TypeNode(Type type)
         {
             Name = ModifiersGenerator.GetAtributes(type) + type.Name;
-            propertus = new List<PropertuNode>();
-            fields = new List<FieldNode>();
-            methods = new List<MethodNode>();
+            propertus = new ObservableCollection<PropertuNode>();
+            fields = new ObservableCollection<FieldNode>();
+            methods = new ObservableCollection<MethodNode>();
             GetFields(type);
             GetProperties(type);
             GetMethods(type);
@@ -30,28 +30,18 @@ namespace AssemblyBrowser.structure
         private void GetTypeSignature()
         {
             
-
-            foreach (FieldNode field in fields)
-            {
+            if (fields.Count>0)
                 Typeinfo = "\tFields:\n\t\t";
+            foreach (FieldNode field in fields)                          
                 Typeinfo += field.TypeName + " " + field.Name + "\n\t\t";
-            }
-
-
-
-            foreach (PropertuNode property in propertus)
-            {
+            if (propertus.Count > 0)
                 Typeinfo += "\n\tProperties\n\t\t";
+            foreach (PropertuNode property in propertus) 
                 Typeinfo += property.TypeName + " " + property.Name + "\n\t\t";
-            }
-
-
-
-            foreach (MethodNode method in methods)
-            {
+            if (methods.Count > 0)
                 Typeinfo += "\n\tMethods\n\t\t";
-                Typeinfo += method.Signature + "\n\t\t";
-            }
+            foreach (MethodNode method in methods)              
+                Typeinfo += method.Signature + "\n\t\t";           
 
             this.Typeinfo = Typeinfo;
         }

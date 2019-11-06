@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace AssemblyBrowser
 {
-    class AssemblyLoader
+    public class AssemblyLoader
     {
 
         public AssemblyLoader()
@@ -15,12 +15,15 @@ namespace AssemblyBrowser
         }
         public BrowseResult Load(string path)
         {
-           
-            Assembly assembly = Assembly.LoadFrom(path);
-            return new BrowseResult(assembly);
-            
-                 
-                 
+            try
+            {
+                Assembly assembly = Assembly.LoadFrom(path);
+                return new BrowseResult(assembly);
+            }
+            catch
+            {
+                return null;
+            }
         }
        
     }
