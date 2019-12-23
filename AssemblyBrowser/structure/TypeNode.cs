@@ -63,7 +63,8 @@ namespace AssemblyBrowser.structure
         }
         private void GetMethods(Type type)
         {
-            foreach(MethodInfo method in type.GetMethods())
+            foreach(MethodInfo method in type.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
+.Where(m => !m.IsSpecialName))
             {
                 methods.Add(new MethodNode(method));
             }
